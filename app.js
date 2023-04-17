@@ -2,6 +2,7 @@
 const express = require('express')
 const app = express()
 const { engine } = require('express-handlebars')
+const mongoose = require('mongoose')
 const restaurantData = require('./restaurant.json')
 
 //express template engine setting
@@ -11,6 +12,18 @@ app.set('views', './views')
 
 //port setting
 const port = 3000
+
+//mongoose setting
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
+mongoose.connect(process.env.MONGODB_URI)
+
+const db = mongoose.connection
+
+db.on('error', () => console.log('error'))
+db.once('open', () => console.log('MongoDB is connected.'))
 
 //router setting
 app.get('/', (req, res) => {
