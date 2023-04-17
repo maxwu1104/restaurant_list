@@ -2,8 +2,9 @@
 const express = require('express')
 const app = express()
 const { engine } = require('express-handlebars')
+const restaurantData = require('./restaurant.json')
 
-//express templete engine setting
+//express template engine setting
 app.engine('hbs', engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 app.set('views', './views')
@@ -13,7 +14,8 @@ const port = 3000
 
 //router setting
 app.get('/', (req, res) => {
-  res.render('index')
+  const restaurantList = restaurantData.results
+  res.render('index', { restaurant: restaurantList })
 })
 
 //server start and listen
