@@ -23,7 +23,19 @@ app.get('/restaurants/:id', (req, res) => {
   const restaurant = restaurantData.results.find(
     (restaurant) => restaurant.id.toString() === id
   )
-  return res.render('show', { restaurant: restaurant })
+  res.render('show', { restaurant: restaurant })
+})
+
+app.get('/search', (req, res) => {
+  const keyword = req.query.keyword
+  const restaurants = restaurantData.results.filter((restaurant) => {
+    return (
+      restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
+      restaurant.name_en.toLowerCase().includes(keyword.toLowerCase()) ||
+      restaurant.category.toLowerCase().includes(keyword.toLowerCase())
+    )
+  })
+  res.render('index', { restaurant: restaurants, keyword: keyword })
 })
 
 //server start and listen
