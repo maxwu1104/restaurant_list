@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const { engine } = require('express-handlebars')
 const mongoose = require('mongoose')
-const restaurantData = require('./restaurant.json')
+const Restaurant = require('./models/restaurant')
 
 //express template engine setting
 app.engine('hbs', engine({ defaultLayout: 'main', extname: '.hbs' }))
@@ -18,7 +18,10 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 
 const db = mongoose.connection
 
@@ -27,28 +30,37 @@ db.once('open', () => console.log('MongoDB is connected.'))
 
 //router setting
 app.get('/', (req, res) => {
-  const restaurantList = restaurantData.results
-  res.render('index', { restaurant: restaurantList })
+  Restaurant.find()
+    .lean()
+    .then((restaurants) => res.render('index', { restaurant: restaurants }))
+    .catch((error) => console.log('error'))
 })
 
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
-  const restaurant = restaurantData.results.find(
-    (restaurant) => restaurant.id.toString() === id
-  )
-  res.render('show', { restaurant: restaurant })
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('show', { restaurant: restaurant }))
+    .catch((error) => {
+      console.log('error')
+    })
 })
 
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
-  const restaurants = restaurantData.results.filter((restaurant) => {
-    return (
-      restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
-      restaurant.name_en.toLowerCase().includes(keyword.toLowerCase()) ||
-      restaurant.category.toLowerCase().includes(keyword.toLowerCase())
-    )
-  })
-  res.render('index', { restaurant: restaurants, keyword: keyword })
+  return Restaurant.find()
+    .lean()
+    .then((restaurants) => {
+      const restaurant = restaurants.filter((restaurant) => {
+        return (
+          restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
+          restaurant.name_en.toLowerCase().includes(keyword.toLowerCase()) ||
+          restaurant.category.toLowerCase().includes(keyword.toLowerCase())
+        )
+      })
+      res.render('index', { restaurant: restaurant, keyword: keyword })
+    })
+    .catch((error) => console.log('error'))
 })
 
 //server start and listen
