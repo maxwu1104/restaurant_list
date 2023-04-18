@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const { engine } = require('express-handlebars')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 const Restaurant = require('./models/restaurant')
 
 //express template engine setting
@@ -12,6 +13,9 @@ app.set('views', './views')
 
 //port setting
 const port = 3000
+
+//post parser
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //mongoose setting
 if (process.env.NODE_ENV !== 'production') {
@@ -60,6 +64,19 @@ app.get('/search', (req, res) => {
       })
       res.render('index', { restaurant: restaurant, keyword: keyword })
     })
+    .catch((error) => console.log('error'))
+})
+
+app.get('/restaurant/new', (req, res) => {
+  res.render('new')
+})
+
+app.post('/restaurants', (req, res) => {
+  const restaurant = req.body
+  const newRestaurant = new Restaurant({ ...restaurant })
+  return newRestaurant
+    .save()
+    .then(() => res.redirect('/'))
     .catch((error) => console.log('error'))
 })
 
