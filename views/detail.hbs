@@ -1,0 +1,28 @@
+<!-- ./views/show.handlebars -->
+<div class='container py-5'>
+  <div class='text-center'>
+    <img
+      class='rounded mb-4'
+      src='{{restaurant.image}}'
+      alt='Card image cap'
+      style='max-height: 300px; aspect-ratio: 16/9; object-fit:cover'
+    />
+  </div>
+  <div class='row w-50 mx-auto'>
+    <p>餐廳名稱：{{restaurant.name}}</p>
+    <p>餐廳英文名稱：{{restaurant.name_en}}</p>
+    <p>餐廳分類：{{restaurant.category}}</p>
+    <p>餐廳圖片：{{restaurant.image}}</p>
+    <p>餐廳地址：{{restaurant.location}}</p>
+    <p>餐廳電話：{{restaurant.phone}}</p>
+    <p>地址網址：{{restaurant.google_map}}</p>
+    <p>餐廳評分：{{restaurant.rating}}</p>
+    <p>餐廳簡介：{{restaurant.description}}</p>
+  </div>
+  <div class='text-center'>
+    <a href='/restaurant/{{restaurant._id}}/edit' class='me-2'>Edit</a>
+    <a href='/restaurant/{{restaurant._id}}/delete'>
+      <button class='btn btn-danger'>Delete</button>
+    </a>
+  </div>
+</div>

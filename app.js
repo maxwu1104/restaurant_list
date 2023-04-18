@@ -90,7 +90,7 @@ app.get('/restaurant/:id/edit', (req, res) => {
     .catch((error) => console.log(error))
 })
 
-app.post('/restaurants/:id/edit', (req, res) => {
+app.post('/restaurant/:id/edit', (req, res) => {
   const id = req.params.id
   const restaurantEdit = req.body
   return Restaurant.findByIdAndUpdate(id, restaurantEdit)
@@ -105,6 +105,16 @@ app.get('/restaurant/:id/delete', (req, res) => {
       res.render('index')
     })
     .catch((error) => console.log('error'))
+})
+
+app.get('/restaurant/:id/detail', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('detail', { restaurant: restaurant }))
+    .catch((error) => {
+      console.log('error')
+    })
 })
 
 //server start and listen
