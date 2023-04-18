@@ -1,5 +1,9 @@
 <div class='container mt-3'>
-  <form action='/restaurants' method='post' class='position-relative'>
+  <form
+    action='/restaurants/{{id}}/edit'
+    method='post'
+    class='position-relative'
+  >
     <div class='mx-auto w-50'>
 
       <div class='mb-4 mx-auto'>
@@ -11,6 +15,7 @@
             id='name'
             placeholder='輸入餐廳名稱...'
             class='w-100 px-3 py-1.5 form-control'
+            value='{{restaurant.name}}'
             required='true'
           />
         </div>
@@ -25,6 +30,7 @@
             id='name_en'
             placeholder='輸入餐廳英文名稱...'
             class='w-100 px-3 py-1.5 form-control'
+            value='{{restaurant.name_en}}'
             required='true'
           />
         </div>
@@ -39,6 +45,7 @@
             id='category'
             placeholder='餐廳分類'
             class='w-100 px-3 py-1.5 form-control'
+            value='{{restaurant.category}}'
             required='true'
           />
           <datalist id='categories'>
@@ -61,6 +68,7 @@
             id='image'
             placeholder='image-url..'
             class='w-100 px-3 py-1.5 form-control'
+            value='{{restaurant.image}}'
             required='true'
           />
         </div>
@@ -75,6 +83,7 @@
             id='location'
             placeholder='輸入餐廳地址..'
             class='w-100 px-3 py-1.5 form-control'
+            value='{{restaurant.location}}'
             required='true'
           />
         </div>
@@ -89,6 +98,7 @@
             id='phone'
             placeholder='輸入餐廳電話..'
             class='w-100 px-3 py-1.5 form-control'
+            value='{{restaurant.phone}}'
             required='true'
           />
         </div>
@@ -103,6 +113,7 @@
             id='google_map'
             placeholder='輸入餐廳Google地址網址..'
             class='w-100 px-3 py-1.5 form-control'
+            value='{{restaurant.google_map}}'
             required='true'
           />
         </div>
@@ -120,6 +131,7 @@
             max='5'
             step='0.1'
             class='w-100 px-3 py-1.5 form-control'
+            value='{{restaurant.rating}}'
             required='true'
           />
         </div>
@@ -136,7 +148,7 @@
             placeholder='簡單說明此間餐廳...'
             class='w-100 px-3 py-1.5 form-control'
             required='true'
-          ></textarea>
+          >{{restaurant.description}}</textarea>
         </div>
       </div>
 

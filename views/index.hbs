@@ -33,6 +33,7 @@
           href='/restaurants/{{this._id}}'
           class='text-secondary text-decoration-none'
         >
+          {{! card body }}
           <div class='card mb-2'>
             <picture class='img-box'>
               <img
@@ -43,9 +44,11 @@
                 style='aspect-ratio: 16 / 9; object-fit:cover;'
               />
             </picture>
+            {{! card title }}
             <div class='card-body'>
               <h6 class='card-title m-0 fw-semibold'>{{this.name}}</h6>
             </div>
+            {{! card footer }}
             <div
               class='card-footer d-flex'
               style='justify-content: space-between;'
@@ -59,6 +62,15 @@
             </div>
           </div>
         </a>
+        {{! card action }}
+        <div class='text-end'>
+          <a href='/restaurant/{{this._id}}/edit' class='me-2'>Edit</a>
+          <a href='/restaurant/{{this._id}}/' class='me-2'>Detail</a>
+          <a href='/restaurant/{{this._id}}/delete'>
+            <button class='btn btn-danger'>Delete</button>
+          </a>
+        </div>
+
       </div>
     {{/each}}
   </div>

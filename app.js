@@ -80,6 +80,24 @@ app.post('/restaurants', (req, res) => {
     .catch((error) => console.log('error'))
 })
 
+app.get('/restaurant/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) =>
+      res.render('edit', { restaurant: restaurant, id: id })
+    )
+    .catch((error) => console.log(error))
+})
+
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  const restaurantEdit = req.body
+  return Restaurant.findByIdAndUpdate(id, restaurantEdit)
+    .then(() => res.redirect('/'))
+    .catch((error) => console.log('error'))
+})
+
 //server start and listen
 app.listen(port, () => {
   console.log(`Express server is working on http://localhost:${port}`)
