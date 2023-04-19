@@ -5,6 +5,9 @@ const { engine } = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const Restaurant = require('./models/restaurant')
+const methodOverride = require('method-override')
+
+
 
 //express template engine setting
 app.engine('hbs', engine({ defaultLayout: 'main', extname: '.hbs' }))
@@ -16,6 +19,7 @@ const port = 3000
 
 //post parser
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 //mongoose setting
 if (process.env.NODE_ENV !== 'production') {
@@ -67,11 +71,11 @@ app.get('/search', (req, res) => {
     .catch((error) => console.log('error'))
 })
 
-app.get('/restaurant/new', (req, res) => {
+app.get('/restaurants/new', (req, res) => {
   res.render('new')
 })
 
-app.post('/restaurants', (req, res) => {
+app.post('/restaurants/new', (req, res) => {
   const restaurant = req.body
   const newRestaurant = new Restaurant({ ...restaurant })
   return newRestaurant
@@ -80,7 +84,7 @@ app.post('/restaurants', (req, res) => {
     .catch((error) => console.log('error'))
 })
 
-app.get('/restaurant/:id/edit', (req, res) => {
+app.get('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()
@@ -90,7 +94,7 @@ app.get('/restaurant/:id/edit', (req, res) => {
     .catch((error) => console.log(error))
 })
 
-app.post('/restaurant/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id
   const restaurantEdit = req.body
   return Restaurant.findByIdAndUpdate(id, restaurantEdit)
@@ -98,16 +102,16 @@ app.post('/restaurant/:id/edit', (req, res) => {
     .catch((error) => console.log('error'))
 })
 
-app.get('/restaurant/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findByIdAndDelete(id)
     .then(() => {
-      res.render('index')
+      res.redirect('/')
     })
     .catch((error) => console.log('error'))
 })
 
-app.get('/restaurant/:id/detail', (req, res) => {
+app.get('/restaurants/:id/detail', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()

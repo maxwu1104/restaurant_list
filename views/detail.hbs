@@ -1,12 +1,8 @@
 <!-- ./views/show.handlebars -->
 <div class='container py-5'>
   <div class='text-center'>
-    <img
-      class='rounded mb-4'
-      src='{{restaurant.image}}'
-      alt='Card image cap'
-      style='max-height: 300px; aspect-ratio: 16/9; object-fit:cover'
-    />
+    <img class='rounded mb-4' src='{{restaurant.image}}' alt='Card image cap'
+      style='max-height: 300px; aspect-ratio: 16/9; object-fit:cover' />
   </div>
   <div class='row w-50 mx-auto'>
     <p>餐廳名稱：{{restaurant.name}}</p>
@@ -20,9 +16,9 @@
     <p>餐廳簡介：{{restaurant.description}}</p>
   </div>
   <div class='text-center'>
-    <a href='/restaurant/{{restaurant._id}}/edit' class='me-2'>Edit</a>
-    <a href='/restaurant/{{restaurant._id}}/delete'>
-      <button class='btn btn-danger'>Delete</button>
-    </a>
+    <a href='/restaurants/{{restaurant._id}}/edit' class='me-2'>Edit</a>
+    <form action='/restaurants/{{this._id}}?_method=DELETE' method='POST' style='display:inline;'>
+      <button type='submit' class='btn btn-danger'>delete</button>
+    </form>
   </div>
 </div>

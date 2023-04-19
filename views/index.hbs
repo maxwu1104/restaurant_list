@@ -4,21 +4,10 @@
     <div class='col-12'>
       <form action='/search'>
         <div class='input-group mb-3'>
-          <input
-            type='text'
-            name='keyword'
-            class='form-control'
-            placeholder='輸入欲搜尋餐廳名稱...'
-            aria-label='Restaurant Name...'
-            aria-describedby='search-button'
-            value='{{keyword}}'
-          />
+          <input type='text' name='keyword' class='form-control' placeholder='輸入欲搜尋餐廳名稱...'
+            aria-label='Restaurant Name...' aria-describedby='search-button' value='{{keyword}}' />
           <div class='input-group-append'>
-            <button
-              class='btn btn-outline-secondary'
-              type='submit'
-              id='search-button'
-            >搜尋</button>
+            <button class='btn btn-outline-secondary' type='submit' id='search-button'>搜尋</button>
           </div>
         </div>
       </form>
@@ -28,50 +17,39 @@
   {{! render restaurant list }}
   <div class='row' id='data-panel'>
     {{#each restaurant}}
-      <div class='col-sm-4 mb-4'>
-        <a
-          href='/restaurants/{{this._id}}'
-          class='text-secondary text-decoration-none'
-        >
-          {{! card body }}
-          <div class='card mb-2'>
-            <picture class='img-box'>
-              <img
-                id='restaurant-image'
-                class='card-img-top'
-                src='{{this.image}}'
-                alt='Card image cap'
-                style='aspect-ratio: 16 / 9; object-fit:cover;'
-              />
-            </picture>
-            {{! card title }}
-            <div class='card-body'>
-              <h6 class='card-title m-0 fw-semibold'>{{this.name}}</h6>
-            </div>
-            {{! card footer }}
-            <div
-              class='card-footer d-flex'
-              style='justify-content: space-between;'
-            >
-              <span class='d-inline-block' style='font-size: 0.8rem;'>
-                <i class='fa-solid fa-tag me-2'></i>{{this.category}}
-              </span>
-              <span class='d-inline-block' style='font-size: 0.8rem;'>
-                <i class='fa-solid fa-star me-2'></i>{{this.rating}}
-              </span>
-            </div>
+    <div class='col-sm-4 mb-4'>
+      <a href='/restaurants/{{this._id}}' class='text-secondary text-decoration-none'>
+        {{! card body }}
+        <div class='card mb-2'>
+          <picture class='img-box'>
+            <img id='restaurant-image' class='card-img-top' src='{{this.image}}' alt='Card image cap'
+              style='aspect-ratio: 16 / 9; object-fit:cover;' />
+          </picture>
+          {{! card title }}
+          <div class='card-body'>
+            <h6 class='card-title m-0 fw-semibold'>{{this.name}}</h6>
           </div>
-        </a>
-        {{! card action }}
-        <div class='text-end'>
-          <a href='/restaurant/{{this._id}}/edit' class='me-2'>Edit</a>
-          <a href='/restaurant/{{this._id}}/detail' class='me-2'>Detail</a>
-          <a href='/restaurant/{{this._id}}/delete'>
-            <button class='btn btn-danger'>Delete</button>
-          </a>
+          {{! card footer }}
+          <div class='card-footer d-flex' style='justify-content: space-between;'>
+            <span class='d-inline-block' style='font-size: 0.8rem;'>
+              <i class='fa-solid fa-tag me-2'></i>{{this.category}}
+            </span>
+            <span class='d-inline-block' style='font-size: 0.8rem;'>
+              <i class='fa-solid fa-star me-2'></i>{{this.rating}}
+            </span>
+          </div>
         </div>
-
+      </a>
+      {{! card action }}
+      <div class='text-end'>
+        <a href='/restaurants/{{this._id}}/edit' class='me-2'>Edit</a>
+        <a href='/restaurants/{{this._id}}/detail' class='me-2'>Detail</a>
+        <form action='/restaurants/{{this._id}}?_method=DELETE' method='POST' style='display:inline;'>
+          <button type='submit' class='btn btn-danger'>delete</button>
+        </form>
       </div>
+
+    </div>
     {{/each}}
   </div>
   {{! render restaurant list }}
