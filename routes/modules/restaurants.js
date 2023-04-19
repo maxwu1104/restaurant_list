@@ -2,6 +2,16 @@ const express = require('express')
 const router = express.Router()
 const Restaurant = require('../../models/restaurant')
 
+router.get('/:id(\\w{24})', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('show', { restaurant: restaurant }))
+    .catch((error) => {
+      console.log('error')
+    })
+})
+
 router.get('/new', (req, res) => {
   return res.render('new')
 })
@@ -13,16 +23,6 @@ router.post('/new', (req, res) => {
     .save()
     .then(() => res.redirect('/'))
     .catch((error) => console.log('error'))
-})
-
-router.get('/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
-    .lean()
-    .then((restaurant) => res.render('show', { restaurant: restaurant }))
-    .catch((error) => {
-      console.log('error')
-    })
 })
 
 router.get('/:id/edit', (req, res) => {
