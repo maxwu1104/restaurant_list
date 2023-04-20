@@ -10,6 +10,7 @@ const methodOverride = require('method-override')
 // require internal files
 const routes = require('./routes')
 require('./config/mongoose')
+require('./helper')
 
 // express template engine setting
 app.engine('hbs', engine({ defaultLayout: 'main', extname: '.hbs' }))
@@ -23,7 +24,7 @@ app.use(methodOverride('_method'))
 // routes setting
 app.use(routes)
 
-//server start and listen
+// server start and listen
 app.listen(3000, () => {
-  console.log(`Express server is working on http://localhost:3000`)
+  console.log('Express server is working on http://localhost:3000')
 })

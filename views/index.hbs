@@ -1,7 +1,7 @@
 <div class='container mt-5'>
   {{! search bar }}
-  <div class='row' id='search-bar'>
-    <div class='col-12'>
+  <div class='row d-flex justify-content-between'>
+    <div class='col-3'>
       <form action='/search'>
         <div class='input-group mb-3'>
           <input type='text' name='keyword' class='form-control' placeholder='輸入欲搜尋餐廳名稱...'
@@ -11,6 +11,18 @@
           </div>
         </div>
       </form>
+    </div>
+    <form action="/sort" method="get" class="visually-hidden" id="sort-form">
+    </form>
+    <div class='col-3'>
+      <select name="sort" id="sort" class="w-100 p-2" form='sort-form' onchange="this.form.submit()">
+        <option value="name-asc" {{#ifEqual sort 'name-asc' }} selected {{/ifEqual}}>A-Z</option>
+        <option value="name-desc" {{#ifEqual sort 'name-desc' }} selected {{/ifEqual}}>Z-A</option>
+        <option value="category" {{#ifEqual sort 'category' }} selected {{/ifEqual}}>Category
+        </option>
+        <option value="location" {{#ifEqual sort 'location' }} selected {{/ifEqual}}>Location
+        </option>
+      </select>
     </div>
   </div>
   {{! search bar }}
@@ -48,7 +60,6 @@
           <button type='submit' class='btn btn-danger'>delete</button>
         </form>
       </div>
-
     </div>
     {{/each}}
   </div>

@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
   Restaurant.find()
     .lean()
     .then((restaurants) => res.render('index', { restaurant: restaurants }))
-    .catch((error) => console.log('error'))
+    .catch((_error) => console.log('error'))
 })
 
 router.get('/search', (req, res) => {
@@ -21,9 +21,31 @@ router.get('/search', (req, res) => {
           restaurant.category.toLowerCase().includes(keyword.toLowerCase())
         )
       })
-      res.render('index', { restaurant: restaurant, keyword: keyword })
+      res.render('index', { restaurant, keyword })
     })
-    .catch((error) => console.log('error'))
+    .catch((_error) => console.log('error'))
+})
+
+router.get('/sort', (req, res) => {
+  const sort = req.query.sort
+  const sortTarget =
+    sort === 'name-asc'
+      ? { name: 'asc' }
+      : sort === 'name-desc'
+        ? { name: 'desc' }
+        : sort === 'category'
+          ? { category: 'asc' }
+          : sort === 'location'
+            ? { location: 'asc' }
+            : ''
+
+  return Restaurant.find()
+    .lean()
+    .sort(sortTarget)
+    .then((restaurants) => {
+      return res.render('index', { restaurant: restaurants, sort })
+    })
+    .catch((_error) => console.log('error'))
 })
 
 module.exports = router
