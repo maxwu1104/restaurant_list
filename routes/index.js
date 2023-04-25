@@ -7,8 +7,10 @@ const router = express.Router()
 // require internal files
 const home = require('./modules/home')
 const restaurants = require('./modules/restaurants')
+const users = require('./modules/users')
 
 // router setting
+router.use('/users/', users)
 router.use('/restaurants', restaurants)
 router.use('/', home)
 
