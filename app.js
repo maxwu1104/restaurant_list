@@ -10,6 +10,7 @@ const session = require('express-session')
 
 // require internal files
 const routes = require('./routes')
+const usePassport = require('./config/passport')
 require('./config/mongoose')
 require('./helper')
 
@@ -28,6 +29,15 @@ app.use(
 )
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+
+// authenticated
+usePassport(app)
+
+app.use((req, res, next) => {
+  res.locals.authenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  next()
+})
 
 // routes setting
 app.use(routes)
