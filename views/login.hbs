@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row col-xxl-5 mx-auto border border-secondary rounded px-3 py-4" style="margin-top: 6rem;">
     <h1 class="text-center py-3 fw-bold">Login</h1>
+    {{> message}}
     <form action="/users/login" method="POST">
       <label for="email" class="mb-2">Email</label>
       <div class="input-group mb-2">
