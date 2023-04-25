@@ -10,11 +10,13 @@
 
 <body class='position-relative'>
   <nav class='navbar navbar-dark bg-dark'>
-    <div class='container-fluid d-flex justify-content-between'>
+    <div class='container-fluid px-4'>
       <a href='/' class='navbar-brand'>Restaurant List</a>
-      <a href='/restaurants/new/' class='me-3'>
-        <button class='btn btn-primary'>新增餐廳</button>
-      </a>
+      {{#if isAuthenticated}}
+      <a href='/users/logout' class=' btn btn-primary' style="width:100px">Logout</a>
+      {{else}}
+      <a href='/users/login/' class=' btn btn-primary' style="width:100px">Login</a>
+      {{/if}}
     </div>
   </nav>
 
