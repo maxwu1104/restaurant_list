@@ -6,6 +6,7 @@ const app = express()
 const { engine } = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+const session = require('express-session')
 
 // require internal files
 const routes = require('./routes')
@@ -18,6 +19,13 @@ app.set('view engine', 'hbs')
 app.set('views', './views')
 
 // go through here first
+app.use(
+  session({
+    secret: process.env.SESSION,
+    resave: false,
+    saveUninitialized: true
+  })
+)
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
