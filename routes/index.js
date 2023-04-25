@@ -9,7 +9,7 @@ const home = require('./modules/home')
 const restaurants = require('./modules/restaurants')
 
 // router setting
-router.use('/', home)
 router.use('/restaurants', restaurants)
+router.use('/', home)
 
 module.exports = router
