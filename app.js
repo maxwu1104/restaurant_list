@@ -8,6 +8,10 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const flash = require('connect-flash')
+const path = require('path')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 // require internal files
 const routes = require('./routes')
@@ -18,7 +22,7 @@ require('./helper')
 // express template engine setting
 app.engine('hbs', engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
-app.set('views', './views')
+app.set('views', path.join(__dirname, 'views'))
 
 // go through here first
 app.use(
@@ -48,6 +52,7 @@ app.use((req, res, next) => {
 app.use(routes)
 
 // server start and listen
-app.listen(3000, () => {
+const PORT = process.env.PORT
+app.listen(PORT, () => {
   console.log('Express server is working on http://localhost:3000')
 })
